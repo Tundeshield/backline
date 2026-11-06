@@ -20,10 +20,10 @@ export default function Auth({ mode }) {
   };
 
   return (
-    <div className="grid min-h-full lg:grid-cols-2">
+    <div className="grid min-h-full bg-paper lg:grid-cols-2">
       <div className="flex flex-col justify-center px-6 py-12 sm:px-16">
         <Link to="/"><Logo /></Link>
-        <h1 className="display mt-12 text-4xl font-semibold">{signup ? 'Set up your back office' : 'Welcome back'}</h1>
+        <h1 className="t-section mt-12">{signup ? 'Set up your back office' : 'Welcome back'}</h1>
         <p className="mt-2 text-ink/60">{signup ? 'Takes about five minutes. You can invite your accountant later.' : 'Sign in to Backline.'}</p>
         <form className="mt-8 max-w-sm space-y-4" onSubmit={(e) => { e.preventDefault(); go(() => (signup ? signUp(f.name, f.email, f.password) : signIn(f.email, f.password))); }}>
           {signup && <Field label="Your name"><input className="input" required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>}
@@ -37,17 +37,23 @@ export default function Auth({ mode }) {
           {signup ? <>Already have an account? <Link className="font-semibold text-ink underline" to="/login">Sign in</Link></> : <>New to Backline? <Link className="font-semibold text-ink underline" to="/signup">Create an account</Link></>}
         </p>
         {demoMode && (
-          <div className="mt-8 max-w-sm rounded-xl border border-amber/50 bg-amber/10 p-4 text-sm">
+          <div className="mt-8 max-w-sm rounded-xl border border-sand bg-white/70 p-4 text-sm">
             Firebase isn't configured yet, so accounts are stored in this browser. Or{' '}
             <button className="font-semibold underline" onClick={() => { startDemo(); nav('/app'); }}>open the sample business</button>.
           </div>
         )}
       </div>
-      <div className="grain hidden items-center justify-center bg-ink p-16 lg:flex">
-        <blockquote className="max-w-md text-paper">
-          <div className="display text-3xl leading-snug">"We were onboarded to e-invoicing in a week. Now the books close themselves and our accountant just signs off."</div>
-          <div className="mt-6 text-sm text-paper/50">— The kind of review we're building Backline to earn</div>
-        </blockquote>
+      <div className="hidden flex-col justify-between bg-ink p-14 text-paper lg:flex">
+        <div className="eyebrow !text-[#d98a76]">Backline</div>
+        <div>
+          <div className="t-section max-w-md">Run your business. We'll handle the back office.</div>
+          <ul className="mt-10 space-y-4 text-[15px] text-paper/75">
+            {['Invoices created, sent and cleared for e-invoicing', 'Books, VAT records and payroll kept in step', 'Follow-ups on WhatsApp and email, approved by you', 'An accountant checks the work'].map((t) => (
+              <li key={t} className="flex gap-3"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d98a76]" />{t}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="text-[12.5px] text-paper/45">Business administration, built for Nigeria.</div>
       </div>
     </div>
   );

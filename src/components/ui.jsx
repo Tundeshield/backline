@@ -4,13 +4,16 @@ import { useEffect } from 'react';
 export function Button({ variant = 'primary', size = 'md', className = '', ...p }) {
   const v = {
     primary: 'bg-ink text-paper hover:bg-ink-2',
-    signal: 'bg-signal text-ink hover:brightness-95',
-    ghost: 'bg-transparent text-ink hover:bg-paper-2',
-    outline: 'border border-line bg-white text-ink hover:border-ink',
+    accent: 'bg-terracotta text-white hover:bg-terracotta-dark',
+    signal: 'bg-terracotta text-white hover:bg-terracotta-dark', // legacy alias → accent
+    light: 'bg-paper text-ink hover:bg-white',
+    ghost: 'bg-transparent text-ink hover:bg-ink/5',
+    outline: 'border border-sand bg-white/70 text-ink hover:border-ink',
+    'outline-light': 'border border-paper/30 text-paper hover:border-paper',
     danger: 'bg-rust text-white hover:brightness-95',
   }[variant];
-  const s = { sm: 'px-2.5 py-1.5 text-xs', md: 'px-4 py-2 text-sm', lg: 'px-6 py-3 text-base' }[size];
-  return <button className={`inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed ${v} ${s} ${className}`} {...p} />;
+  const s = { sm: 'h-8 px-3 text-xs', md: 'h-10 px-4 text-sm', lg: 'h-12 px-6 text-[15px]' }[size];
+  return <button className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${v} ${s} ${className}`} {...p} />;
 }
 
 export function Card({ className = '', children, ...p }) {
@@ -21,7 +24,7 @@ export function PageHeader({ title, sub, children }) {
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h1 className="display text-3xl font-semibold">{title}</h1>
+        <h1 className="display text-[2rem] font-medium leading-tight">{title}</h1>
         {sub && <p className="mt-1 text-sm text-ink/60">{sub}</p>}
       </div>
       <div className="flex flex-wrap gap-2">{children}</div>
@@ -30,7 +33,7 @@ export function PageHeader({ title, sub, children }) {
 }
 
 export function Stat({ label, value, hint, tone = 'ink', icon: Icon }) {
-  const t = { ink: 'text-ink', signal: 'text-signal-dark', amber: 'text-amber', rust: 'text-rust' }[tone];
+  const t = { ink: 'text-ink', signal: 'text-signal-dark', amber: 'text-[#9a6210]', rust: 'text-rust' }[tone];
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-ink/50">
@@ -43,7 +46,7 @@ export function Stat({ label, value, hint, tone = 'ink', icon: Icon }) {
 }
 
 const BADGE = {
-  green: 'bg-signal/15 text-signal-dark', amber: 'bg-amber/20 text-[#9a6210]', red: 'bg-rust/15 text-rust',
+  green: 'bg-signal/15 text-signal-dark', amber: 'bg-amber/20 text-[#8a5a0c]', red: 'bg-rust/12 text-rust', terracotta: 'bg-terracotta-soft text-terracotta-dark',
   gray: 'bg-ink/8 text-ink/60', blue: 'bg-sky/15 text-sky', ink: 'bg-ink text-paper',
 };
 export const Badge = ({ tone = 'gray', children }) => (
@@ -92,7 +95,7 @@ export function Bars({ data, height = 160 }) {
         <div key={d.label} className="flex h-full flex-1 flex-col items-center gap-2">
           <div className="flex w-full flex-1 items-end justify-center gap-1">
             <div title={`In: ${d.a.toLocaleString()}`} className="w-1/3 rounded-t bg-signal" style={{ height: `${(d.a / max) * 100}%` }} />
-            <div title={`Out: ${d.b.toLocaleString()}`} className="w-1/3 rounded-t bg-ink/70" style={{ height: `${(d.b / max) * 100}%` }} />
+            <div title={`Out: ${d.b.toLocaleString()}`} className="w-1/3 rounded-t bg-ink/75" style={{ height: `${(d.b / max) * 100}%` }} />
           </div>
           <div className="text-[11px] font-medium text-ink/50">{d.label}</div>
         </div>
@@ -104,5 +107,5 @@ export function Bars({ data, height = 160 }) {
 export function Toast({ msg, onDone }) {
   useEffect(() => { if (msg) { const t = setTimeout(onDone, 3500); return () => clearTimeout(t); } }, [msg, onDone]);
   if (!msg) return null;
-  return <div className="fixed bottom-6 left-1/2 z-[60] -translate-x-1/2 rounded-xl bg-ink px-5 py-3 text-sm font-medium text-paper shadow-xl">{msg}</div>;
+  return <div className="fixed bottom-6 left-1/2 z-[60] max-w-[90vw] -translate-x-1/2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper shadow-xl">{msg}</div>;
 }

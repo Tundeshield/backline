@@ -1,6 +1,6 @@
 # Backline
 
-**The digital back office for small businesses in Nigeria.** One monthly subscription runs a business's admin:
+**Run your business. We'll handle the back office.** Backline is the back office for growing Nigerian businesses: invoicing, bookkeeping, tax, payroll and business follow-ups, handled together, with an accountant checking the work.
 
 | Module | What it does |
 |---|---|
@@ -12,6 +12,13 @@
 | **Accountant review** | Monthly close checklist with Backline's automatic checks, accountant view to tick off and sign off. Premium tier feature. |
 
 Pricing tiers by invoice volume (Starter → Growth → Business → **Compliance-Plus** for medium firms already under the e-invoicing mandate).
+
+## Brand
+
+- **Palette:** warm paper `#F5F0E7`, deep ink `#172231`, terracotta `#9C4938` (sparing accent), muted sand `#D9CBB7` (borders). Green is reserved for success / positive figures.
+- **Type:** Newsreader (headlines), Manrope (body), IBM Plex Mono (figures). Type scale classes `t-hero`, `t-section`, `t-card`, `t-lead`, `eyebrow` in `src/index.css`.
+- **Mark:** a B built from the "back line" (terracotta stroke) and two ledger bars — `src/components/Logo.jsx`, `public/favicon.svg`.
+- **Motif:** a single vertical line connecting the work (hero timeline, services spine).
 
 ## Stack
 

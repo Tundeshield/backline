@@ -37,7 +37,7 @@ export default function Onboarding() {
         <div className="mt-10 flex gap-2">
           {STEPS.map((s, i) => (
             <div key={s} className="flex-1">
-              <div className={`h-1.5 rounded-full ${i <= step ? 'bg-ink' : 'bg-line'}`} />
+              <div className={`h-1.5 rounded-full ${i <= step ? 'bg-ink' : 'bg-sand/70'}`} />
               <div className={`mt-2 text-xs font-semibold ${i === step ? 'text-ink' : 'text-ink/40'}`}>{s}</div>
             </div>
           ))}
@@ -46,7 +46,7 @@ export default function Onboarding() {
         <div className="card mt-8 p-8">
           {step === 0 && (
             <div className="grid gap-4 sm:grid-cols-2">
-              <h2 className="display text-2xl font-semibold sm:col-span-2">Tell us about the business</h2>
+              <h2 className="t-card !text-2xl sm:col-span-2">Tell us about the business</h2>
               <Field label="Trading name"><input className="input" value={b.name} onChange={set('name')} placeholder="Ijebu Gold Foods" /></Field>
               <Field label="Registered (legal) name"><input className="input" value={b.legalName} onChange={set('legalName')} placeholder="Ijebu Gold Foods Limited" /></Field>
               <Field label="CAC RC / BN number"><input className="input" value={b.rcNumber} onChange={set('rcNumber')} placeholder="RC 1234567" /></Field>
@@ -63,7 +63,7 @@ export default function Onboarding() {
 
           {step === 1 && (
             <div className="space-y-5">
-              <h2 className="display text-2xl font-semibold">Size and e-invoicing status</h2>
+              <h2 className="t-card !text-2xl">Size and e-invoicing status</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label={`Annual turnover — ${compact(b.turnover)}`}>
                   <input type="range" min={10_000_000} max={8_000_000_000} step={10_000_000} value={b.turnover} onChange={set('turnover')} className="w-full accent-ink" />
@@ -85,12 +85,12 @@ export default function Onboarding() {
 
           {step === 2 && (
             <div>
-              <h2 className="display text-2xl font-semibold">Choose a plan</h2>
+              <h2 className="t-card !text-2xl">Choose a plan</h2>
               <p className="mt-1 text-sm text-ink/60">We recommend <b>{PLANS.find((p) => p.id === rec).name}</b> for your size.</p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {PLANS.map((p) => (
                   <button key={p.id} onClick={() => setPlan(p.id)} className={`rounded-xl border-2 p-4 text-left transition ${chosen === p.id ? 'border-ink bg-paper' : 'border-line hover:border-ink/40'}`}>
-                    <div className="flex items-center justify-between"><span className="font-semibold">{p.name}</span>{p.id === rec && <span className="rounded-full bg-signal px-2 py-0.5 text-[10px] font-bold">RECOMMENDED</span>}</div>
+                    <div className="flex items-center justify-between"><span className="font-semibold">{p.name}</span>{p.id === rec && <span className="rounded-full bg-terracotta px-2 py-0.5 text-[10px] font-bold text-white">RECOMMENDED</span>}</div>
                     <div className="num mt-1 text-xl font-semibold">{naira(p.price)}<span className="text-xs font-normal text-ink/50">/mo</span></div>
                     <div className="mt-1 text-xs text-ink/60">{p.invoices === Infinity ? 'Unlimited' : p.invoices.toLocaleString()} invoices · {p.staff} staff</div>
                   </button>
@@ -102,7 +102,7 @@ export default function Onboarding() {
 
           {step === 3 && (
             <div className="space-y-4">
-              <h2 className="display text-2xl font-semibold">Connect your accounts</h2>
+              <h2 className="t-card !text-2xl">Connect your accounts</h2>
               <p className="text-sm text-ink/60">You can do this now or later from Settings. Nothing is switched on until you approve it.</p>
               {[
                 ['NRS e-invoicing (MBS)', 'Starts in sandbox. We switch you to live once your Access Point onboarding is approved.', 'Sandbox ready'],
@@ -122,7 +122,7 @@ export default function Onboarding() {
             <Button variant="ghost" disabled={step === 0} onClick={() => setStep(step - 1)}>Back</Button>
             {step < 3
               ? <Button disabled={step === 0 && (!b.name || !b.tin)} onClick={() => setStep(step + 1)}>Continue</Button>
-              : <Button variant="signal" onClick={finish}>Open my back office</Button>}
+              : <Button variant="accent" onClick={finish}>Open my back office</Button>}
           </div>
         </div>
       </div>

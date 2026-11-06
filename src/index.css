@@ -1,43 +1,79 @@
 @import "tailwindcss";
 
+/*
+ * Backline brand system
+ * ---------------------
+ * Warm paper + deep ink carry the brand. Terracotta is the single accent,
+ * used sparingly. Green is reserved for success / positive financial states.
+ */
 @theme {
-  --color-ink: #0e1b2c;
-  --color-ink-2: #1b2b40;
-  --color-ink-3: #2c3e56;
-  --color-paper: #f6f2ea;
-  --color-paper-2: #ece6da;
-  --color-line: #ddd5c6;
-  --color-signal: #2bd493;
-  --color-signal-dark: #14996a;
-  --color-amber: #f2a93b;
-  --color-rust: #d9583b;
-  --color-sky: #4f8ef7;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* core */
+  --color-paper: #f5f0e7;      /* warm paper — primary background */
+  --color-paper-2: #ece4d6;    /* raised paper — secondary surfaces */
+  --color-ink: #172231;        /* deep ink — text, nav, buttons, dark sections */
+  --color-ink-2: #223044;
+  --color-ink-3: #36465c;
+  --color-terracotta: #9c4938; /* accent — sparing */
+  --color-terracotta-dark: #823b2c;
+  --color-terracotta-soft: #f1e1d9;
+  --color-sand: #d9cbb7;       /* borders, dividers, secondary backgrounds */
+  --color-line: #e2d7c6;       /* hairlines on paper / white */
+
+  /* feedback (product UI) */
+  --color-signal: #3fae7f;     /* success fills */
+  --color-signal-dark: #1f7a55;/* success text, AA on white */
+  --color-amber: #d99a2b;
+  --color-rust: #b9442f;       /* errors, overdue */
+  --color-sky: #3f6fb5;
+
+  --font-display: "Newsreader", Georgia, serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
+html { scroll-behavior: smooth; }
 html, body, #root { height: 100%; }
-body { @apply bg-paper text-ink font-sans antialiased; }
-.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-.display { font-family: var(--font-display); letter-spacing: -0.02em; }
+body { @apply bg-paper font-sans text-ink antialiased; font-size: 15px; line-height: 1.6; }
+::selection { background: var(--color-terracotta-soft); }
+:focus-visible { outline: 2px solid var(--color-terracotta); outline-offset: 2px; }
 
+/* ---------- Typography system ---------- */
+.display { font-family: var(--font-display); letter-spacing: -0.015em; font-optical-sizing: auto; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+/* hero: 40 → 68px */
+.t-hero { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.025em; line-height: 1.02; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem); }
+/* section heading: 30 → 46px */
+.t-section { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em; line-height: 1.08; font-size: clamp(1.875rem, 1.4rem + 1.9vw, 2.875rem); }
+/* card heading */
+.t-card { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; font-size: 1.3rem; }
+/* lead paragraph */
+.t-lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: 1.6; color: color-mix(in oklab, var(--color-ink) 72%, transparent); }
+/* eyebrow / label */
+.eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-terracotta); }
+
+/* ---------- Product UI primitives ---------- */
 .input {
-  @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-signal/30;
+  @apply w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-terracotta/20;
 }
 .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/60; }
 .card { @apply rounded-2xl border border-line bg-white; }
 .tbl { @apply w-full text-sm; }
-.tbl th { @apply border-b border-line px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-ink/50; }
-:where(.tbl th) { text-align: left; }
-.tbl td { @apply border-b border-line/60 px-4 py-3 align-middle; }
+.tbl th { @apply border-b border-line px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-ink/55; }
+@layer base { .tbl th { text-align: left; } }
+.tbl td { @apply border-b border-line/70 px-4 py-3 align-middle; }
 .tbl tr:last-child td { @apply border-b-0; }
 .tbl tbody tr:hover { @apply bg-paper/60; }
 
-.grain {
-  background-image: radial-gradient(rgba(14, 27, 44, 0.06) 1px, transparent 1px);
-  background-size: 14px 14px;
+/* the "back line" — brand motif: a single vertical rule that connects the work */
+.backline-rule { position: relative; }
+.backline-rule::before {
+  content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px;
+  background: linear-gradient(var(--color-terracotta), var(--color-sand));
+  border-radius: 2px;
 }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 
 @media print {
   .no-print { display: none !important; }

@@ -6,17 +6,9 @@ import {
 import { useApp } from '../lib/store.jsx';
 import { PLANS } from '../lib/tax.js';
 
-export const Logo = ({ light }) => (
-  <div className="flex items-center gap-2">
-    <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden>
-      <rect width="64" height="64" rx="14" fill={light ? '#F6F2EA' : '#0E1B2C'} />
-      <rect x="14" y="16" width="8" height="32" rx="2" fill="#2BD493" />
-      <rect x="26" y="24" width="24" height="6" rx="3" fill={light ? '#0E1B2C' : '#F6F2EA'} />
-      <rect x="26" y="34" width="16" height="6" rx="3" fill={light ? '#0E1B2C' : '#F6F2EA'} opacity=".6" />
-    </svg>
-    <span className={`display text-xl font-semibold ${light ? 'text-paper' : 'text-ink'}`}>Backline</span>
-  </div>
-);
+import Logo from './Logo.jsx';
+
+export { Logo };
 
 const NAV = [
   ['/app', 'Overview', LayoutDashboard, true],
@@ -48,7 +40,7 @@ export default function Layout({ children }) {
       <nav className="flex-1 space-y-0.5 px-3">
         {NAV.map(([to, label, Icon, end]) => (
           <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}
-            className={({ isActive }) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${isActive ? 'bg-signal text-ink' : 'text-paper/70 hover:bg-ink-2 hover:text-paper'}`}>
+            className={({ isActive }) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${isActive ? 'bg-paper text-ink shadow-[inset_3px_0_0_var(--color-terracotta)]' : 'text-paper/70 hover:bg-ink-2 hover:text-paper'}`}>
             <Icon size={17} />{label}
           </NavLink>
         ))}
@@ -68,7 +60,7 @@ export default function Layout({ children }) {
       {open && <div className="no-print fixed inset-0 z-40 flex lg:hidden"><div>{Side}</div><div className="flex-1 bg-ink/40" onClick={() => setOpen(false)} /></div>}
       <main className="flex-1 overflow-y-auto">
         {demoMode && (
-          <div className="no-print bg-amber/90 px-4 py-1.5 text-center text-xs font-semibold text-ink">
+          <div className="no-print bg-terracotta-soft px-4 py-1.5 text-center text-xs font-semibold text-terracotta-dark">
             Demo mode — data lives in this browser only. Add Firebase keys to go live.
           </div>
         )}
