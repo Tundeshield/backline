@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function biz(bizId) { return get(/databases/$(database)/documents/businesses/$(bizId)).data; }
+    function isMember(bizId) {
+      return signedIn() && (request.auth.uid in biz(bizId).members);
+    }
+    function isAccountant(bizId) {
+      return signedIn() && ('accountants' in biz(bizId)) && (request.auth.uid in biz(bizId).accountants);
+    }
+
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /businesses/{bizId} {
+      allow create: if signedIn() && request.auth.uid in request.resource.data.members;
+      allow read: if isMember(bizId) || isAccountant(bizId);
+      allow update: if isMember(bizId);
+
+      // All modules live under the business: invoices, customers, transactions,
+      // receipts, employees, payrollRuns, conversations, appointments, reviews
+      match /{collection}/{docId} {
+        allow read: if isMember(bizId) || isAccountant(bizId);
+        allow write: if isMember(bizId);
+        // Accountants may only write review records
+        allow write: if collection == 'reviews' && isAccountant(bizId);
+      }
+    }
+  }
+}

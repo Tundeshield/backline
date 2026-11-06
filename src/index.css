@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0e1b2c;
+  --color-ink-2: #1b2b40;
+  --color-ink-3: #2c3e56;
+  --color-paper: #f6f2ea;
+  --color-paper-2: #ece6da;
+  --color-line: #ddd5c6;
+  --color-signal: #2bd493;
+  --color-signal-dark: #14996a;
+  --color-amber: #f2a93b;
+  --color-rust: #d9583b;
+  --color-sky: #4f8ef7;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html, body, #root { height: 100%; }
+body { @apply bg-paper text-ink font-sans antialiased; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.display { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+.input {
+  @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm outline-none transition focus:border-ink focus:ring-2 focus:ring-signal/30;
+}
+.label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-ink/60; }
+.card { @apply rounded-2xl border border-line bg-white; }
+.tbl { @apply w-full text-sm; }
+.tbl th { @apply border-b border-line px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-ink/50; }
+:where(.tbl th) { text-align: left; }
+.tbl td { @apply border-b border-line/60 px-4 py-3 align-middle; }
+.tbl tr:last-child td { @apply border-b-0; }
+.tbl tbody tr:hover { @apply bg-paper/60; }
+
+.grain {
+  background-image: radial-gradient(rgba(14, 27, 44, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+}
